@@ -1,0 +1,39 @@
+{
+  "name": "wealthflow",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.5"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n api,web -c cyan,green \"tsx watch src/server/index.ts\" \"vite\"",
+    "build": "npm run clean && tsc -p tsconfig.server.json && vite build && npm run build:addon",
+    "build:addon": "tsc -p bridge-addon/tsconfig.json && vite build --config bridge-addon/vite.config.ts",
+    "package:addon": "node bridge-addon/scripts/package.mjs",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
+    "start": "node dist/server/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@fastify/static": "^10.1.4",
+    "decimal.js": "^10.6.0",
+    "fastify": "^5.6.1",
+    "luxon": "^3.7.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@types/luxon": "^3.7.1",
+    "@types/node": "^24.5.2",
+    "@types/react": "^19.1.16",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.3",
+    "concurrently": "^9.2.1",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.7",
+    "vitest": "^3.2.4"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "id": "wealthflow-addon",
+  "name": "WealthFlow",
+  "version": "1.0.0",
+  "description": "Review Node-scheduled deposits and deliver them through Wealthfolio's supported add-on host API.",
+  "author": "WealthFlow",
+  "main": "dist/addon.js",
+  "sdkVersion": "3.8.0",
+  "minWealthfolioVersion": "3.8.0",
+  "enabled": true,
+  "license": "MIT",
+  "contributes": {
+    "routes": [{ "id": "wealthflow" }],
+    "links": {
+      "sidebar": [
+        {
+          "id": "wealthflow",
+          "route": "wealthflow",
+          "label": "WealthFlow",
+          "icon": "calendar-check",
+          "order": 82
+        }
+      ]
+    }
+  },
+  "network": {
+    "allowedHosts": ["wealthflow.invalid"]
+  },
+  "permissions": [
+    {
+      "category": "accounts",
+      "functions": ["getAll"],
+      "purpose": "List active Wealthfolio accounts and sync their identifiers to the scheduler."
+    },
+    {
+      "category": "activities",
+      "functions": ["getAll", "create"],
+      "purpose": "Check stable activity IDs and create deposits only after explicit user confirmation."
+    },
+    {
+      "category": "network",
+      "functions": ["request"],
+      "purpose": "Connect to the separately running WealthFlow scheduler over an approved HTTPS host."
+    },
+    {
+      "category": "secrets",
+      "functions": ["set", "use"],
+      "purpose": "Store and use the WealthFlow scheduler bearer token without reading it back into add-on JavaScript."
+    }
+  ]
+}

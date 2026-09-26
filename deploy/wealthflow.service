@@ -1,0 +1,25 @@
+[Unit]
+Description=WealthFlow recurring bookkeeping
+After=network.target
+
+[Service]
+Type=simple
+User=wealthflow
+Group=wealthflow
+WorkingDirectory=/opt/wealthflow
+EnvironmentFile=/etc/wealthflow.env
+ExecStart=/usr/bin/node /opt/wealthflow/dist/server/index.js
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+KillSignal=SIGTERM
+
+# Reasonable hardening; ensure DATABASE_PATH remains writable.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/wealthflow
+
+[Install]
+WantedBy=multi-user.target
